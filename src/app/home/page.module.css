@@ -1,0 +1,15 @@
+.card{
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 5px 20px 10px rgba(0, 0, 0, 0.05);
+    margin:10px 0px;
+}
+.input{
+    outline: none;
+    padding: 7px 10px;
+    border-radius: 5px;
+    border: 1px solid #99abb4;
+    box-shadow: 0 5px 20px 10px rgba(0, 0, 0, 0.05);
+    background-color: #CCEEF4;
+}
