@@ -1,16 +1,14 @@
 'use client'
 import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
-import styles from "./page.module.css";
+import styles from "../../assets/style.module.css";
 
 const ClientComponent = () => {
 
     const [inputs, setInputs] = useState(['']);
 
-    const sideBarHandler = (e) => {
+    const addMoreHandler = (e) => {
         e.preventDefault()
-        setInputs(prevInputs => [...prevInputs, '']); 
+        setInputs(prevInputs => [...prevInputs, '']);
     };
 
     const handleInputChange = (index, value) => {
@@ -19,7 +17,7 @@ const ClientComponent = () => {
         setInputs(newInputs);
     };
 
-    const handleSubmit = async  (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         const requestBody = JSON.stringify({ inputs });
         const response = await fetch('endpoint-url', {
@@ -33,20 +31,7 @@ const ClientComponent = () => {
 
     return (
         <>
-            <form onSubmit={handleSubmit}>
-                {inputs.map((input, index) => (
-                    <input
-                        key={index}
-                        className={styles.input}
-                        type="text"
-                        value={input}
-                        onChange={(e) => handleInputChange(index, e.target.value)}
-                        name={`input-${index}`}
-                    />
-                ))}
-                <button onClick={sideBarHandler} className={styles.input} >Add</button>
-                <button className={styles.input} >Submit</button>
-            </form>
+           
         </>
     );
 };
