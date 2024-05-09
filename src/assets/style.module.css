@@ -37,6 +37,10 @@
   flex-basis: 50%;
 }
 
+.d_flex_1 {
+  flex: 1;
+}
+
 .flex_direction_col {
   flex-direction: column;
 }
@@ -45,8 +49,20 @@
   justify-content: center;
 }
 
+.flex_space_around {
+  justify-content: space-around;
+}
+
 .text_center {
   text-align: center;
+}
+
+.text_left {
+  text-align: left;
+}
+
+.overflow_hidden{
+  overflow-x: hidden;
 }
 
 .gradient_text_blue {
@@ -58,15 +74,14 @@
 
 .container {
   display: flex;
-  height: 100vh;
-  width: 100vw;
+  min-height: 100vh;
+  width: 100%;
   flex-wrap: wrap;
   overflow: hidden;
 }
 
 .header {
   height: 50px;
-  /* background-color: #0970BF; */
   background-image: linear-gradient(to bottom, #029afc, #0072bc);
   width: 100%;
   display: flex;
@@ -204,11 +219,28 @@
   width: 100%;
   padding: 10px;
   white-space: nowrap;
+  position: relative;
 }
 
-.sidebar ul li a.active,
+.sidebar ul li a::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0px;
+  background-image: linear-gradient(to bottom, #029afc, #0072bc);
+  z-index: -1;
+  transition: width 0.3s ease;
+}
+
 .sidebar ul li a:hover {
-  background: #e8ecef;
+  color: #fff;
+}
+
+.sidebar ul li a:hover::before,
+.sidebar ul li a:active::before {
+  width: 100%;
 }
 
 .sidebar ul li span {
@@ -237,7 +269,7 @@
 .card {
   border-radius: 5px;
   box-shadow: 0 5px 20px 10px rgba(0, 0, 0, 0.4);
-  background: rgba(255, 255, 255, .1);
+  background: #fff;
   display: flex;
   flex-direction: column;
 }
@@ -296,7 +328,7 @@
   border: none;
   color: #0970BF;
   border-radius: 30px;
-  background-color: #f1f1f1;
+  background-color: #0970BF4f;
   width: 200px;
   cursor: pointer;
   font-weight: 700;
@@ -326,6 +358,85 @@
   width: 200px;
 }
 
+
+.input_btn_ribbon {
+  outline: none;
+  padding: 10px 0px;
+  border: none;
+  color: #fff;
+  background-color: #0072bc;
+  width: 200px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 16px;
+  position: relative;
+  left: -16px;
+  margin-bottom: 10px;
+  text-align: left;
+  text-transform: capitalize;
+}
+
+.input_btn_ribbon:hover {
+  color: #fff;
+  filter: brightness(1);
+}
+
+.input_btn_ribbon::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0px;
+  background-image: linear-gradient(to bottom, #029afc, #0072bc);
+  transition: width 0.3s ease;
+  z-index: -1;
+}
+
+
+.input_btn_ribbon:hover::before {
+  width: 200px;
+}
+
+
+.input_btn_ribbon::after {
+  content: '';
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  background: red;
+  left: 5px;
+  top: 26px;
+  transform: rotate(45deg);
+  z-index: -2;
+}
+
+.input_btn_ribbon:hover::after {
+  background-color: transparent;
+}
+
+.invalid:invalid~.label {
+  color: red;
+  top: -22px;
+  font-size: 12px;
+}
+
+.invalid:invalid {
+  border-bottom: 1px solid red;
+}
+
+.invalid_message {
+  display: none;
+}
+
+.invalid:invalid~.invalid_message {
+  display: block;
+  font-size: 10px;
+  color: red;
+  position: absolute;
+  top: 38px;
+}
+
 .progress_bar {
   display: flex;
   position: relative;
@@ -336,20 +447,31 @@
 
 .progress_bar ul {
   display: flex;
-
+  position: relative;
 }
 
 .progress_bar ul::before {
   content: "";
   position: absolute;
   top: 12px;
-  width: 50%;
+  width: calc(var(--step)*(100%/var(--total-steps)));
   height: 6px;
-  /* background: #0970BF4f; */
   background-image: linear-gradient(to bottom, #029afc, #0072bc);
-  left: 25%;
   border-radius: 100px;
+  transition: width 0.8s ease;
 }
+
+.progress_bar ul::after {
+  content: "";
+  position: absolute;
+  top: 12px;
+  width: 100%;
+  height: 6px;
+  background: #0970BF4f;
+  border-radius: 100px;
+  transition: width 0.8s ease;
+}
+
 
 .progress_bar ul li {
   display: flex;
@@ -370,6 +492,32 @@
   line-height: 28px;
 }
 
+.card_info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: justify;
+  color: #0970BF;
+}
+
+.info_title {
+  box-shadow: 0 5px 5px -5px #333;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+@media screen and (max-width: 600px) {
+  .flex_direction_col_sm {
+    flex-direction: column;
+  }
+  .card_info div{
+    margin-bottom: 40px;
+  }
+}
+
 @media screen and (max-width: 767px) {
   .header_logo {
     display: none;
@@ -383,10 +531,17 @@
   .progress_bar ul li {
     margin: 0px 30px;
   }
+
+  .flex_direction_col_sm {
+    flex-direction: column;
+  }
 }
 
 @media screen and (max-width: 991px) {
   .page_content {
     width: 100vw;
+  }
+  .flex_direction_col_md {
+    flex-direction: column;
   }
 }
