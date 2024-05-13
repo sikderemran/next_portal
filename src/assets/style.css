@@ -14,6 +14,9 @@ body {
   font-family: "Hind Vadodara", -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Arial, sans-serif;
 }
 
+a{
+  text-decoration: none;
+}
 
 li {
   list-style: none;
@@ -22,4 +25,31 @@ li {
 .container.nav-closed .sidebar,
 .container.nav-closed .header-logo {
   width: 0;
+}
+
+.spinner{
+  display: block;
+  position: relative;
+}
+.spinner::after {
+  content: '';
+  box-sizing: border-box;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 50vh;
+  left: calc(50% - 20px);
+  border-radius: 50%;
+}
+
+.spinner.smooth::after {
+  border-top: 4px solid #0970BF;
+  border-left: 4px solid #0970BF;
+  border-right: 4px solid rgba(255, 255, 255, 0.0);
+  animation: spinner .6s linear infinite;
+}
+@keyframes spinner {
+  to {
+      transform: rotate(360deg);
+  }
 }

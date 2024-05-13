@@ -1,29 +1,31 @@
-import Image from "next/image";
-import '@fortawesome/fontawesome-svg-core/styles.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import ClientComponent from './ClientComponent';
 import styles from '../assets/style.module.css';
 import '../assets/style.css'
-const Header = ({ children }) => {
+import Logout from "../app/logout"
+import { getServerSession } from 'next-auth';
+import Link from "next/link";
+const Header = async ({ children }) => {
+    const session = await getServerSession();
     return (
         <>
             <div className={styles.header}>
                 <div className={styles.header_logo}>
-                    <img className={styles.site_logo} src='./next.svg' />
+                    <img className={styles.site_logo} src='../next.svg' />
                     <span className={styles.site_title}>IPORTAL</span>
                 </div>
                 <div className={styles.header_search}>
-                    <ClientComponent />
-                    <input type="search" placeholder="Search..." />
+                    {!!session && <ClientComponent />}
+                    {/* <input type="search" placeholder="Search..." /> */}
                 </div>
                 <div className={styles.header_menu}>
-                    <a href="#">
-                        <FontAwesomeIcon icon={faRightFromBracket} />
-                    </a>
+                    <span className={styles.logout}>
+                        {!session && 
+                            <Link href='register'>SignUp</Link>
+                        }
+                        {!!session && <Logout />}
+                    </span>
                 </div>
             </div>
-
         </>
     );
 }

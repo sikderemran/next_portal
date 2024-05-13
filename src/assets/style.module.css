@@ -65,6 +65,11 @@
   overflow-x: hidden;
 }
 
+.logout{
+  color: #fff;
+  cursor: pointer;
+}
+
 .gradient_text_blue {
   background: linear-gradient(to bottom, #029afc, #0072bc);
   -webkit-background-clip: text;
@@ -74,7 +79,7 @@
 
 .container {
   display: flex;
-  min-height: 100vh;
+  height: 100vh;
   width: 100%;
   flex-wrap: wrap;
   overflow: hidden;
@@ -264,6 +269,7 @@
   width: 100%;
   flex: 1;
   background-color: rgba(255, 255, 255, 0.25);
+  overflow-y: scroll;
 }
 
 .card {
@@ -404,8 +410,8 @@
   position: absolute;
   width: 25px;
   height: 25px;
-  background: red;
-  left: 5px;
+  background:#0970BF;
+  left: 5.3px;
   top: 26px;
   transform: rotate(45deg);
   z-index: -2;

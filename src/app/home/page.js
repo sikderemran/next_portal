@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Header from "../../layout/header";
 import Sidebar from "../../layout/sidebar";
 import ClientComponent from "./ClientComponent";

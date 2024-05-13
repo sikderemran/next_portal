@@ -1,10 +1,22 @@
 import Header from '../../layout/header'
 import styles from "../../assets/style.module.css";
 import ClientComponent from "./ClientComponent";
-import ProgressBar from "./progress_bar"
 import { ContextProvider } from './context';
+import { getServerSession } from 'next-auth';
+import { redirect } from 'next/navigation';
+import Loading from '../loading';
 
-const Login = () => {
+const Login = async () => {
+    const session = await getServerSession();
+    if (session) {
+        redirect('/home');
+    }
+    const isLoading=false
+    if (isLoading) {
+        return (
+            <Loading loading={isLoading} />
+        )
+    }
 
     return (
         <ContextProvider>
@@ -28,7 +40,7 @@ const Login = () => {
                             </div>
                             <div className={`${styles.d_flex} ${styles.my_20} ${styles.flex_direction_col_md} `}>
                                 <div className={`${styles.d_flex_basis_50} ${styles.text_center}`}>
-                                    <img src='./registration.png' />
+                                    <img style={{width:'300px'}} src='./registration.svg' />
                                 </div>
                                 <div className={`${styles.d_flex_basis_50} ${styles.text_center} ${styles.overflow_hidden}`}>
                                     <ClientComponent />

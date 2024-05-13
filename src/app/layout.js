@@ -1,6 +1,4 @@
 import { Inter } from "next/font/google";
-import Header from "../layout/header"
-import Footer from "../layout/footer"
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -8,12 +6,11 @@ export const metadata = {
   description: "Investment Portal Description",
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
         {children}
-        <Footer/>
       </body>
     </html>
   );

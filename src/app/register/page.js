@@ -17,9 +17,6 @@ const Register = () => {
                             <ProgressBar total_step={4} />
                             <div className={`${styles.d_flex} ${styles.my_20} ${styles.flex_direction_col_md}`}>
                                 <div className={`${styles.d_flex_basis_50} ${styles.text_center}`}>
-                                    <img src='./registration.png' />
-                                </div>
-                                <div className={`${styles.d_flex_basis_50} ${styles.text_center}`}>
                                     <ClientComponent />
                                 </div>
                             </div>
