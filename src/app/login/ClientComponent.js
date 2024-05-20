@@ -109,7 +109,7 @@ const ClientComponent = () => {
                     <button onClick={addMoreHandler} className={styles.input_btn} >Add</button>
                 </div> */}
                 <div
-                    className={`${styles.formcontrol} ${styles.my_30} ${styles.flex_space_around} `}
+                    className={`${styles.formcontrol} ${styles.my_30} ${styles.d_flex} ${styles.flex_space_around} `}
                 >
                     <button
                         onClick={StepBackHandler} className={styles.input_btn}

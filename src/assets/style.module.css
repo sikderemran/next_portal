@@ -21,6 +21,19 @@
   margin-bottom: 30px !important;
 }
 
+.mx_10 {
+  margin-left: 10px !important;
+  margin-right: 10px !important;
+}
+
+.mt_8 {
+  margin-top: 8px !important;
+}
+
+.mb_10 {
+  margin-bottom: 10px;
+}
+
 .mb_20 {
   margin-bottom: 20px;
 }
@@ -33,9 +46,6 @@
   display: flex;
 }
 
-.d_flex_basis_50 {
-  flex-basis: 50%;
-}
 
 .d_flex_1 {
   flex: 1;
@@ -53,12 +63,48 @@
   justify-content: space-around;
 }
 
+.flex_space_end {
+  justify-content: end;
+}
+
+.gap_10{
+  gap:10px;
+}
+
+.flex_wrap{
+  flex-wrap: wrap;
+}
+
+.flex_10{
+  flex-basis: 10%;
+}
+
+.flex_14{
+  flex-basis: 14%;
+}
+
+.flex_21{
+  flex-basis: 21%;
+}
+
+.d_flex_basis_50 {
+  flex-basis: 50%;
+}
+
+.flex_100{
+  flex-basis: 100%;
+}
+
 .text_center {
   text-align: center;
 }
 
 .text_left {
   text-align: left;
+}
+
+.text_size_13{
+  font-size: 13px !important;
 }
 
 .overflow_hidden{
@@ -296,7 +342,6 @@
 .formcontrol {
   position: relative;
   margin: 15px 20px;
-  display: flex;
 }
 
 .input {
@@ -321,9 +366,14 @@
   font-weight: 450;
 }
 
+.input[type='file']~.label {
+  top: -25px;
+  left: 0;
+}
+
 .input:focus~.label,
-.input:valid~.label {
-  top: -22px;
+.input:not(.optional):valid~.label {
+  top: -18px;
   left: 0;
   font-size: 12px;
 }
@@ -443,6 +493,10 @@
   top: 38px;
 }
 
+.invalid[type='file']:invalid~.invalid_message {
+  top: 42px;
+}
+
 .progress_bar {
   display: flex;
   position: relative;
@@ -549,5 +603,8 @@
   }
   .flex_direction_col_md {
     flex-direction: column;
+  }
+  .flex_no_wrap{
+    flex-wrap: nowrap;
   }
 }

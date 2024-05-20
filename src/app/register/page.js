@@ -16,9 +16,7 @@ const Register = () => {
                             <h1 className={`${styles.gradient_text_blue} `}>Application for Account Opening</h1>
                             <ProgressBar total_step={4} />
                             <div className={`${styles.d_flex} ${styles.my_20} ${styles.flex_direction_col_md}`}>
-                                <div className={`${styles.d_flex_basis_50} ${styles.text_center}`}>
-                                    <ClientComponent />
-                                </div>
+                                <ClientComponent />
                             </div>
                         </div>
                     </div>

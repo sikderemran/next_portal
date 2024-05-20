@@ -12,19 +12,20 @@ import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { faFileInvoice } from '@fortawesome/free-solid-svg-icons';
 import styles from '../assets/style.module.css';
+import Link from 'next/link';
 
 const Sidebar = () => {
     return (
         <div className={'sidebar ' + styles.sidebar}>
             <ul>
                 <li><a href="#" ><FontAwesomeIcon icon={faHouseChimney} /><span>Dashboard</span></a></li>
-                <li><a href="#" className={styles.active} ><FontAwesomeIcon icon={faBuildingColumns} /><span>Deposit</span></a></li>
+                <li><Link href="deposit" className={styles.active} ><FontAwesomeIcon icon={faBuildingColumns} /><span>Deposit</span></Link></li>
                 <li><a href="#"><FontAwesomeIcon icon={faMoneyBill1} /><span>Withdraw</span></a></li>
-                <li><a href="#"><FontAwesomeIcon icon={faCreditCard} /><span>Buy Order</span></a></li>
+                <li><Link href="buyorder"><FontAwesomeIcon icon={faCreditCard} /><span>Buy Order</span></Link></li>
                 <li><a href="#"><FontAwesomeIcon icon={faCircleDollarToSlot} /><span>Sell Order</span></a></li>
                 <li><a href="#"><FontAwesomeIcon icon={faMagnifyingGlassChart} /><span>IPO Application</span></a></li>
                 <li><a href="#"><FontAwesomeIcon icon={faComment} /><span>Complain/Feedback</span></a></li>
-                <li><a href="#"><FontAwesomeIcon icon={faFileInvoice} /><span>Portfolio Statement</span></a></li>
+                <li><Link href="portfoliostatement"><FontAwesomeIcon icon={faFileInvoice} /><span>Portfolio Statement</span></Link></li>
                 <li><a href="#"><FontAwesomeIcon icon={faFileInvoice} /><span>Transaction Ledger</span></a></li>
                 <li><a href="#"><FontAwesomeIcon icon={faFileInvoice} /><span>Gain/ Loss Statement</span></a></li>
                 <li><a href="#"><FontAwesomeIcon icon={faFileInvoice} /><span>Tax Certificate</span></a></li>
