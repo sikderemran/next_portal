@@ -2,19 +2,20 @@
 import React, { useState, FormEvent } from 'react';
 import styles from "../../assets/style.module.css";
 import { useStep } from './context';
-
+import Loading from '../loading';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
 
 const ClientComponent = () => {
 
-    const [inputs, setInputs] = useState(['']);
-    const [applicantName, setApplicantName] = useState(['']);
-    const [applicantFatherName, setApplicantFatherName] = useState(['']);
-    const [applicantMotherName, setApplicantMotherName] = useState(['']);
-    const { step, setStep } = useStep();
-    const router = useRouter();
+    const [inputs, setInputs]                               = useState(['']);
+    const [email, setEmail]                                 = useState(['']);
+    const [authError,setAuthError]                          = useState()
+    const [password, setPassword]                           = useState(['']);
+    const { step, setStep }                                 = useStep();
+    const router                                            = useRouter();
+    const [isLoading,setIsLoading]                          = useState(false)
 
     const addMoreHandler = (e) => {
         e.preventDefault()
@@ -32,18 +33,21 @@ const ClientComponent = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setIsLoading(true)
         setStep((step < 4 ? step + 1 : step));
-
         const formData = new FormData(e.currentTarget);
         const response = await signIn('credentials', {
-            email: formData.get('applicantName-0'),
-            password: formData.get('applicantFatherName-0'),
+            email: formData.get('email-0'),
+            password: formData.get('password-0'),
             redirect: false,
         });
-
+        console.log(response)
         if (!response?.error) {
             router.push('/home');
             router.refresh();
+        }else{
+            setAuthError('You have entered an invalid email or password')
+            setIsLoading(false)
         }
     };
 
@@ -51,12 +55,19 @@ const ClientComponent = () => {
         e.preventDefault()
         setStep((step > 1 ? step - 1 : step));
     }
+
     const ValidationHandle = (e) => {
         e.preventDefault()
         let element = e.target
         element.classList.add(styles.invalid)
         let children = element.parentElement.children;
         children[children.length - 1].textContent = element.validationMessage
+    }
+
+    if (isLoading) {
+        return (
+            <Loading loading={isLoading} />
+        )
     }
 
     return (
@@ -73,10 +84,10 @@ const ClientComponent = () => {
                             <input
                                 className={styles.input}
                                 type="email"
-                                defaultValue={applicantName[index]}
+                                defaultValue={email[index]}
                                 required
-                                onChange={(e) => handleInputChange(index, e, setApplicantName)}
-                                name={`applicantName-${index}`}
+                                onChange={(e) => handleInputChange(index, e, setEmail)}
+                                name={`email-${index}`}
                                 onInvalid={e => ValidationHandle(e)}
                             />
                             <label
@@ -89,11 +100,11 @@ const ClientComponent = () => {
                         <div className={`${styles.formcontrol} ${styles.flex_direction_col}`}>
                             <input
                                 className={`${styles.input}`}
-                                type="text"
-                                defaultValue={applicantFatherName[index]}
+                                type="password"
+                                defaultValue={password[index]}
                                 required
-                                onChange={(e) => handleInputChange(index, e, setApplicantFatherName)}
-                                name={`applicantFatherName-${index}`}
+                                onChange={(e) => handleInputChange(index, e, setPassword)}
+                                name={`password-${index}`}
                                 onInvalid={e => ValidationHandle(e)}
                             />
                             <label
@@ -101,7 +112,9 @@ const ClientComponent = () => {
                             >Password</label>
                             <span
                                 className={`${styles.text_left} ${styles.invalid_message}`}
-                            ></span>
+                            >
+                                {authError}
+                            </span>
                         </div>
                     </div>
                 ))}

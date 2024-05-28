@@ -6,6 +6,10 @@
   width: 80%;
 }
 
+.w_100 {
+  width: 100%;
+}
+
 .mx_auto {
   margin-left: auto;
   margin-right: auto;
@@ -24,6 +28,11 @@
 .mx_10 {
   margin-left: 10px !important;
   margin-right: 10px !important;
+}
+
+.mx_20 {
+  margin-left: 20px !important;
+  margin-right: 20px !important;
 }
 
 .mt_8 {
@@ -61,6 +70,10 @@
 
 .flex_space_around {
   justify-content: space-around;
+}
+
+.flex_space_between {
+  justify-content: space-between;
 }
 
 .flex_space_end {
@@ -105,6 +118,14 @@
 
 .text_size_13{
   font-size: 13px !important;
+}
+
+.text_size_15{
+  font-size: 15px !important;
+}
+
+.text_color{
+  color: #0072bc;
 }
 
 .overflow_hidden{
@@ -316,6 +337,18 @@
   flex: 1;
   background-color: rgba(255, 255, 255, 0.25);
   overflow-y: scroll;
+  animation: slide-down 1s forwards;
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .card {
@@ -373,8 +406,8 @@
 
 .input:focus~.label,
 .input:not(.optional):valid~.label {
-  top: -18px;
-  left: 0;
+  top: -18px !important;
+  left: 0 !important;
   font-size: 12px;
 }
 
@@ -555,7 +588,6 @@
 .card_info {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
   font-size: 14px;
   line-height: 20px;
   text-align: justify;

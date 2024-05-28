@@ -6,6 +6,9 @@ import { getServerSession } from 'next-auth';
 import Link from "next/link";
 const Header = async ({ children }) => {
     const session = await getServerSession();
+    if(session){
+        console.log(session.expires)
+    }
     return (
         <>
             <div className={styles.header}>

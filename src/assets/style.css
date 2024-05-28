@@ -22,9 +22,24 @@ li {
   list-style: none;
 }
 
+table {
+  border-collapse: collapse;
+}
+table tr td,
+table tr th {
+  border: 1px solid #0072bc;
+  padding: 2px;
+}
+
 .container.nav-closed .sidebar,
 .container.nav-closed .header-logo {
   width: 0;
+}
+
+.loading{
+  position: absolute;
+  top: 50vh;
+  left: 50%;
 }
 
 .spinner{
@@ -32,13 +47,11 @@ li {
   position: relative;
 }
 .spinner::after {
-  content: '';
+  content: '.....';
   box-sizing: border-box;
   width: 40px;
   height: 40px;
   position: absolute;
-  top: 50vh;
-  left: calc(50% - 20px);
   border-radius: 50%;
 }
 

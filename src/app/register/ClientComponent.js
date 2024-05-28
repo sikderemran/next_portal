@@ -46,8 +46,6 @@ const ClientComponent = () => {
     const [nomineeSignature, setNomineeSignature] = useState(['']);
     const [nomineeNid, setNomineeNid] = useState(['']);
     
-    
-    
     const { step, setStep } = useStep();
 
     const addMoreHandler = (e) => {

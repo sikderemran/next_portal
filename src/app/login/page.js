@@ -4,20 +4,13 @@ import ClientComponent from "./ClientComponent";
 import { ContextProvider } from './context';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
-import Loading from '../loading';
 
 const Login = async () => {
     const session = await getServerSession();
     if (session) {
         redirect('/home');
     }
-    const isLoading=false
-    if (isLoading) {
-        return (
-            <Loading loading={isLoading} />
-        )
-    }
-
+   
     return (
         <ContextProvider>
             <div className={'container ' + styles.container}>
@@ -32,7 +25,7 @@ const Login = async () => {
                                     >Open BO Account</button>
                                     <button
                                         className={styles.input_btn_ribbon}
-                                    >Event Calendar</button>
+                                    >Forgot Password</button>
                                 </div>
                                 <div className={`${styles.d_flex_1}`}>
                                     <h1 className={`${styles.gradient_text_blue}`}>Welcome to iPortal</h1>
@@ -40,13 +33,13 @@ const Login = async () => {
                             </div>
                             <div className={`${styles.d_flex} ${styles.my_20} ${styles.flex_direction_col_md} `}>
                                 <div className={`${styles.d_flex_basis_50} ${styles.text_center}`}>
-                                    <img style={{width:'300px'}} src='./registration.svg' />
+                                    <img style={{width:'300px'}} src='./registration_1.svg' />
                                 </div>
                                 <div className={`${styles.d_flex_basis_50} ${styles.text_center} ${styles.overflow_hidden}`}>
                                     <ClientComponent />
                                 </div>
                             </div>
-                            <div className={`${styles.card_info} ${styles.flex_direction_col_sm}`}>
+                            <div className={`${styles.card_info} ${styles.flex_space_between} ${styles.flex_direction_col_sm}`}>
                                 <div>
                                     <p className={`${styles.info_title}`}>Contact Information</p>
                                     <p>Dial: 16285 or 09606237501</p>
