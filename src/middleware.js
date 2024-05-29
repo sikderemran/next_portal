@@ -8,12 +8,12 @@ export const config =
              * regex start and end /
              * reverse(except) $!
              * match any chracter .
-             * zero to many *
+             * zero to many preceding chatacter *
              * escape \
              * match at the end $
              * or |
              ****/
-            '/((?!.*\.svg$|.*\.jpg$|.*\.png$|login|register|_next).*)'
+            '/((?!.*\.svg$|.*\.jpg$|.*\.png$|login|register|_next).*)/'
         ] 
 }
 

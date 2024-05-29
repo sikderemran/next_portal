@@ -1,25 +1,31 @@
 'use client'
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect,useRef } from 'react';
 import styles from "../../assets/style.module.css";
 import { useSession } from "next-auth/react";
 import Loading from '../loading';
+import Swal from 'sweetalert2'
+import { signOut } from 'next-auth/react';
+
 const ClientComponent = () => {
-    const [investor,setInvestor]=useState([''])
-    const [isLoading,setIsLoading]= useState(false)
-    const {data} = useSession();
-    
+    const [investor,setInvestor]    = useState([])
+    const [isLoading,setIsLoading]  = useState(false)
+    const {data}                    = useSession();
+    const prevToken                 = useRef(null);
+
     useEffect(() => {
-        setIsLoading(true)
         let token;
-        if(data){
-            token = data.user.name;
+        if (data && data.user && data.user.name && data.user.name !== prevToken.current) {
+            token             = data.user.name;
+            prevToken.current = token
+            setIsLoading(true);
             fetchData(token);
         }
-    }, [data]); 
+        
+    }, [data?.user?.name]); 
 
     const fetchData = async (token) => {
         try {
-            const url = process.env.NEXT_PUBLIC_API_URL + '/api/personal-information';
+            const url = process.env.NEXT_PUBLIC_API_URL + '/personal-information';
             const res = await fetch(url, {
                 method: "GET",
                 headers: { 
@@ -31,9 +37,29 @@ const ClientComponent = () => {
             const data = await res.json();
             if(data.status=='success'){
                 setInvestor(data.investor)
+            }else if(res.status==401){
+                Swal.fire({
+                    position: "top-end",
+                    icon: "warning",
+                    title: data.message,
+                    showConfirmButton: false,
+                    timer: 1000,
+                }).then((result) => {
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                        signOut();
+                    }
+                });
             }
         } catch (error) {
-            console.error('Error fetching data:', error);
+            if(error.name=='TypeError'){
+                Swal.fire({
+                    position: "top-end",
+                    icon: "error",
+                    title: 'The server is not responding. Please wait for a moment.',
+                    showConfirmButton: false,
+                    timer: 2000,
+                  });
+            }
         } finally {
             setIsLoading(false)
         }
@@ -47,7 +73,7 @@ const ClientComponent = () => {
 
     return (
         <div className={`${styles.d_flex} ${styles.mx_20}`}>
-             <table>
+             {investor && Object.keys(investor).length > 0 &&(<table>
                 <tbody>
                     <tr>
                         <td>
@@ -131,6 +157,7 @@ const ClientComponent = () => {
                     </tr>
                 </tbody>
              </table>
+            )}
         </div>
     );
 };

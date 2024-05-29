@@ -5,7 +5,7 @@ import { useStep } from './context';
 import Loading from '../loading';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-
+import Swal from 'sweetalert2'
 
 const ClientComponent = () => {
 
@@ -46,7 +46,13 @@ const ClientComponent = () => {
             router.push('/home');
             router.refresh();
         }else{
-            setAuthError('You have entered an invalid email or password')
+            Swal.fire({
+                position: "top-end",
+                icon: "error",
+                title: 'You have entered an invalid email or password.',
+                showConfirmButton: false,
+                timer: 2000,
+            });
             setIsLoading(false)
         }
     };

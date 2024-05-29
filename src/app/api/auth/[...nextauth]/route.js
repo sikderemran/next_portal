@@ -6,13 +6,15 @@ const authOptions = {
     CredentialsProvider({
       name: 'Credentials',
       async authorize(credentials, req) {
-        const url = process.env.NEXT_PUBLIC_API_URL + '/api/login';
+        const url = process.env.NEXT_PUBLIC_API_URL + '/login';
         const formData = new URLSearchParams();
         formData.append('email', credentials.email);
         formData.append('password', credentials.password);
         const res = await fetch(url, {
           method: "POST",
-          headers: { "Accept": "application/json" },
+          headers: { 
+            "Accept": "application/json" 
+          },
           body: formData
         });
         const data = await res.json();

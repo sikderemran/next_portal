@@ -116,6 +116,10 @@
   text-align: left;
 }
 
+.text_right {
+  text-align: right;
+}
+
 .text_size_13{
   font-size: 13px !important;
 }
@@ -519,6 +523,14 @@
 }
 
 .invalid:invalid~.invalid_message {
+  display: block;
+  font-size: 10px;
+  color: red;
+  position: absolute;
+  top: 38px;
+}
+
+.back_invalid {
   display: block;
   font-size: 10px;
   color: red;
