@@ -96,7 +96,7 @@ const ClientComponent = () => {
 
     const fetchInstrumentList = async (token) => {
         try {
-            const url = process.env.NEXT_PUBLIC_API_URL + '/buy-instrument-list';
+            const url = process.env.NEXT_PUBLIC_API_URL + '/sell-instrument-list';
             const res = await fetch(url, {
                 method: "GET",
                 headers: { 
@@ -139,7 +139,7 @@ const ClientComponent = () => {
 
     const fetchOrderInstrument = async (token) => {
         try {
-            const url = process.env.NEXT_PUBLIC_API_URL + '/buy-ordered-list';
+            const url = process.env.NEXT_PUBLIC_API_URL + '/sell-ordered-list';
             const res = await fetch(url, {
                 method: "GET",
                 headers: { 
@@ -179,7 +179,7 @@ const ClientComponent = () => {
 
     const fetchPricePercentage = async (token) => {
         try {
-            const url = process.env.NEXT_PUBLIC_API_URL + '/buy-price-percentage';
+            const url = process.env.NEXT_PUBLIC_API_URL + '/sell-price-percentage';
             const res = await fetch(url, {
                 method: "GET",
                 headers: { 
@@ -312,7 +312,7 @@ const ClientComponent = () => {
             formData.append('days[]',(days[i]?days[i]:''))
             total_amount+=(totalTo[i]?parseFloat(totalTo[i]):0)
         }
-
+        
         if(total_amount>parseFloat(purchasePower.replace(/,/g, ""))){
             Swal.fire({
                 position: "top-end",
@@ -324,7 +324,7 @@ const ClientComponent = () => {
             return
         }
         setIsLoading(true)
-        const url = process.env.NEXT_PUBLIC_API_URL + '/buy-submit-order';
+        const url = process.env.NEXT_PUBLIC_API_URL + '/sell-submit-order';
         try {
             const response = await fetch(url, {
                 method: 'POST',

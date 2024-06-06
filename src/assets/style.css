@@ -31,6 +31,8 @@ table tr th {
   padding: 2px;
 }
 
+
+
 .container.nav-closed .sidebar,
 .container.nav-closed .header-logo {
   width: 0;
@@ -61,6 +63,14 @@ table tr th {
   border-right: 4px solid rgba(255, 255, 255, 0.0);
   animation: spinner .6s linear infinite;
 }
+
+input[type=date]:required:invalid::-webkit-datetime-edit {
+  color: transparent;
+}
+input[type=date]:focus::-webkit-datetime-edit {
+  color: black !important;
+}
+
 @keyframes spinner {
   to {
       transform: rotate(360deg);

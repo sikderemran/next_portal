@@ -23,7 +23,13 @@ const ClientComponent = () => {
     };
 
     const handleInputChange = (index, e, setStateFunction) => {
-        const value = e.target.value
+
+        let element = e.target
+        element.classList.add(styles.invalid)
+        let children = element.parentElement.children;
+        children[children.length - 1].textContent = element.validationMessage
+
+        const value = element.value
         setStateFunction(prevState => {
             const newState = [...prevState];
             newState[index] = value;
@@ -41,7 +47,6 @@ const ClientComponent = () => {
             password: formData.get('password-0'),
             redirect: false,
         });
-        console.log(response)
         if (!response?.error) {
             router.push('/home');
             router.refresh();
@@ -131,11 +136,8 @@ const ClientComponent = () => {
                     className={`${styles.formcontrol} ${styles.my_30} ${styles.d_flex} ${styles.flex_space_around} `}
                 >
                     <button
-                        onClick={StepBackHandler} className={styles.input_btn}
-                    >Back</button>
-                    <button
                         className={styles.input_btn}
-                    >Next</button>
+                    >Sign In</button>
                 </div>
             </form>
         </>

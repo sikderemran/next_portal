@@ -20,9 +20,9 @@ const Sidebar = () => {
             <ul>
                 <li><Link href="home" ><FontAwesomeIcon icon={faHouseChimney} /><span>Dashboard</span></Link></li>
                 <li><Link href="deposit" className={styles.active} ><FontAwesomeIcon icon={faBuildingColumns} /><span>Deposit</span></Link></li>
-                <li><a href="#"><FontAwesomeIcon icon={faMoneyBill1} /><span>Withdraw</span></a></li>
+                <li><Link href="withdraw"><FontAwesomeIcon icon={faMoneyBill1} /><span>Withdraw</span></Link></li>
                 <li><Link href="buyorder"><FontAwesomeIcon icon={faCreditCard} /><span>Buy Order</span></Link></li>
-                <li><a href="#"><FontAwesomeIcon icon={faCircleDollarToSlot} /><span>Sell Order</span></a></li>
+                <li><Link href="sellorder"><FontAwesomeIcon icon={faCircleDollarToSlot} /><span>Sell Order</span></Link></li>
                 <li><Link href="ipo"><FontAwesomeIcon icon={faMagnifyingGlassChart} /><span>IPO Application</span></Link></li>
                 <li><a href="#"><FontAwesomeIcon icon={faComment} /><span>Complain/Feedback</span></a></li>
                 <li><Link href="portfoliostatement"><FontAwesomeIcon icon={faFileInvoice} /><span>Portfolio Statement</span></Link></li>

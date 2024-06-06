@@ -23,7 +23,7 @@ const Header = async ({ children }) => {
                 <div className={styles.header_menu}>
                     <span className={styles.logout}>
                         {!session && 
-                            <Link href='register'>SignUp</Link>
+                            <Link href='register'>Sign Up</Link>
                         }
                         {!!session && <Logout />}
                     </span>

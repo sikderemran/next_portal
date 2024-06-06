@@ -21,8 +21,8 @@ const ClientComponent = () => {
     const [quantity, setQuantity]               = useState();
     const [totalAmount, setTotalAmount]         = useState(0);
 
-    const [quantityError, setQuantityError]               = useState();
-    const [ipo_details_idError, setIpo_details_idError]               = useState();
+    const [quantityError, setQuantityError]                     = useState();
+    const [ipo_details_idError, setIpo_details_idError]         = useState();
 
     
 
@@ -40,7 +40,7 @@ const ClientComponent = () => {
 
     const fetchPurchasePower = async (token) => {
         try {
-            const url = process.env.NEXT_PUBLIC_API_URL + '/ipo-purchasepower';
+            const url = process.env.NEXT_PUBLIC_API_URL + '/purchasepower';
             const res = await fetch(url, {
                 method: "GET",
                 headers: { 
@@ -163,11 +163,15 @@ const ClientComponent = () => {
     };
     
     const handleInputChange = (e,setStateFunction) => {
-        const value = e.target.value
-        if(e.target.name=='ipo'){
-            const faceValue      = e.target.selectedOptions[0].getAttribute('data-facevalue')
-            const lotSize        = e.target.selectedOptions[0].getAttribute('data-lotsize')
-            const rate           = e.target.selectedOptions[0].getAttribute('data-rate')
+        let element = e.target
+        element.classList.add(styles.invalid)
+        let children = element.parentElement.children;
+        children[children.length - 1].textContent = element.validationMessage
+        
+        if(element.name=='ipo'){
+            const faceValue      = element.selectedOptions[0].getAttribute('data-facevalue')
+            const lotSize        = element.selectedOptions[0].getAttribute('data-lotsize')
+            const rate           = element.selectedOptions[0].getAttribute('data-rate')
             setLotSize(lotSize)
             setFaceValue(faceValue)
             setRate(rate)
@@ -178,14 +182,21 @@ const ClientComponent = () => {
             }
         }
 
-        if(e.target.name=='quantity' && rate!=''){
-            const totalAmount       = (parseFloat(rate.replace(/,/g, ""))*parseInt(e.target.value)).toLocaleString()
+        if(element.name=='quantity' && rate!=''){
+            const totalAmount       = (parseFloat(rate.replace(/,/g, ""))*parseInt(element.value)).toLocaleString()
             setTotalAmount(totalAmount)
         }
-        setStateFunction(value);
+        setStateFunction(element.value);
     };
 
-    
+    const ValidationHandle=(e)=>{
+        e.preventDefault()
+        let element=e.target
+        element.classList.add(styles.invalid)
+        let children = element.parentElement.children;
+        children[children.length - 1].textContent=element.validationMessage
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
 
@@ -266,14 +277,6 @@ const ClientComponent = () => {
         
     };
 
-    const ValidationHandle=(e)=>{
-        e.preventDefault()
-        let element=e.target
-        element.classList.add(styles.invalid)
-        let children = element.parentElement.children;
-        children[children.length - 1].textContent=element.validationMessage
-    }
-
     if (isLoading) {
         return (
             <Loading loading={isLoading} />
@@ -285,7 +288,7 @@ const ClientComponent = () => {
                 <div className={`${styles.d_flex} ${styles.flex_direction_col_md} ${styles.flex_justify_center} ${styles.flex_wrap} ${styles.flex_no_wrap}`}>
                     <div className={`${styles.formcontrol} ${styles.mx_10} ${styles.flex_14} ${styles.flex_direction_col}`}>
                         <input
-                            className={styles.input}
+                            className={`${styles.input}`}
                             type="text"
                             value={purchasePower}
                             onChange={(e) => e.preventDefault()}
@@ -293,14 +296,14 @@ const ClientComponent = () => {
                             onInvalid={e => ValidationHandle(e)}
                         />
                         <label
-                            className={`${styles.label} ${styles.text_size_13}`}
+                            className={`${styles.label} ${styles.text_size_13} ${styles.blink}`}
                         >Purchase Power</label>
                         <span
                             className={`${styles.text_left} ${styles.invalid_message}`}
                         ></span>
                     </div>
                     <div className={`${styles.formcontrol} ${styles.mx_10} ${styles.flex_10} ${styles.flex_direction_col}`}>
-                    <select
+                        <select
                             className={styles.input}
                             defaultValue={''}
                             required
@@ -454,7 +457,7 @@ const ClientComponent = () => {
             </form>
 
             <div className={`${styles.d_flex} ${styles.mx_20}`}>
-                <table className={`${styles.w_100}`}>
+                <table className={`${styles.w_100} ${styles.mb_20}`}>
                     <thead>
                         <tr>
                             <th className={`${styles.text_right}`}>SL</th>
@@ -464,8 +467,8 @@ const ClientComponent = () => {
                             <th className={`${styles.text_right}`}>Rate</th>
                             <th className={`${styles.text_right}`}>Quantity</th>
                             <th className={`${styles.text_right}`}>Total Amount</th>
-                            <th className={`${styles.text_left}`}>Business Date</th>
-                            <th className={`${styles.text_left}`}>Trade Date Time</th>
+                            <th className={`${styles.text_right}`}>Business Date</th>
+                            <th className={`${styles.text_right}`}>Trade Date Time</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -480,8 +483,8 @@ const ClientComponent = () => {
                                                     <td className={`${styles.text_right}`}>{data.rate}</td>
                                                     <td className={`${styles.text_right}`}>{data.total_share_per_unit}</td>
                                                     <td className={`${styles.text_right}`}>{data.total_amount}</td>
-                                                    <td className={`${styles.text_left}`}>{data.business_date}</td>
-                                                    <td className={`${styles.text_left}`}>{data.record_date}</td>
+                                                    <td className={`${styles.text_right}`}>{data.business_date}</td>
+                                                    <td className={`${styles.text_right}`}>{data.record_date}</td>
                                                 </tr>
                                 })
                             ):
