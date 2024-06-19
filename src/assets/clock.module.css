@@ -1,0 +1,110 @@
+.clock {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    border: 10px solid #029afc;
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .diallines {
+    position: absolute;
+    width: 2px;
+    height: 15px;
+    background: linear-gradient(to bottom, #029afc, #0072bc);
+    top: 0;
+    left: 50%;
+    transform-origin: 50% 100%;
+  }
+  
+  .number {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 46%;
+    left: 46%;
+    font-size: 20px;
+    text-align: center;
+    transform-origin: 50% 100%;
+  }
+  
+  .hourHand {
+    position: absolute;
+    width: 25%;
+    height: 6px;
+    background: linear-gradient(to bottom, #029afc, #0072bc);
+    top: 50%;
+    left: 50%;
+    transform-origin: 0% 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+  }
+  
+  .minuteHand {
+    position: absolute;
+    width: 40%;
+    height: 4px;
+    background: linear-gradient(to bottom, #029afc, #0072bc);
+    top: 50%;
+    left: 50%;
+    transform-origin: 0% 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+  }
+  
+  .secondHand {
+    position: absolute;
+    width: 45%;
+    height: 2px;
+    background: yellow;
+    top: 50%;
+    left: 50%;
+    transform-origin: 0% 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  }
+  
+  .centerPin {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: linear-gradient(to bottom, #029afc, #0072bc);
+    border-radius: 50%;
+    top: 51%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 4;
+  }
+  
+  .date {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    text-align: center;
+    background: linear-gradient(to bottom, #029afc, #0072bc);
+    border-radius: 15px;
+    padding: 5px;
+    font-size: 14px;
+    color: #fff;
+  }
+  
+  .day {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 33%;
+    text-align: center;
+    background: linear-gradient(to bottom, #029afc, #0072bc);
+    border-radius: 15px;
+    padding: 5px;
+    font-size: 14px;
+    color: #fff;
+  }
+  

@@ -6,10 +6,10 @@ import { ContextProvider } from './context';
 import Head from 'next/head';
 
 export const metadata = {
-    title: "Register - Brac EPL Investments Limited",
+    title: "Sign up - Brac EPL Investments Limited",
     description: "Brac EPL Investments Limited",
 };
-const Register = () => {
+const Signup = () => {
 
     return (
         <>
@@ -19,8 +19,8 @@ const Register = () => {
             </Head>
             <ContextProvider>
                 <div className={`${styles.card} ${styles.w_80} ${styles.vh_80} ${styles.mt_35} ${styles.mb_20} ${styles.mx_auto}`}>
-                    <h1 className={`${styles.gradient_text_blue} `}>Application for Account Opening</h1>
-                    <ProgressBar total_step={6} />
+                    <h1 className={`${styles.gradient_text_blue} `}>Application for Sing Up</h1>
+                    <ProgressBar total_step={3} />
                     <div className={`${styles.d_flex} ${styles.my_20} ${styles.flex_direction_col_md}`}>
                         <ClientComponent />
                     </div>
@@ -30,4 +30,4 @@ const Register = () => {
     )
 }
 
-export default Register;
+export default Signup;

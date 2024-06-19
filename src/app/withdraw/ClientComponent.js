@@ -15,7 +15,7 @@ const ClientComponent = () => {
     
     const [availableBalance, setAvailableBalance]       = useState(0);
     const [totalAmount, setTotalAmount]                 = useState(0);
-    const [totalAmountError, settotalAmountError]       = useState();
+    const [totalAmountError, setTotalAmountError]       = useState();
 
     
 
@@ -119,7 +119,7 @@ const ClientComponent = () => {
         children[children.length - 1].textContent = element.validationMessage
 
         setStateFunction(element.value);
-        if((parseFloat(element.value)+1000)>parseFloat(availableBalance.replace(/,/g,""))){
+        if((parseFloat(element.value)+1000)>=parseFloat(availableBalance.replace(/,/g,""))){
             element.setCustomValidity(`Maximum withdraw amount ${availableBalance} after maintaining minimum balance 1000 tk.`)
             children[children.length - 1].textContent = `Maximum withdraw amount ${availableBalance} after maintaining minimum balance 1000 tk.`
         }else{
@@ -168,8 +168,8 @@ const ClientComponent = () => {
             const data = await response.json();
             if(response.status!=200){
                 const setters = {
-                    totalAmountError: settotalAmountError,
-                  };
+                    totalAmountError: setTotalAmountError,
+                };
                 Object.entries(data.errors).forEach(([key, value]) => {
                     const setterName = key + 'Error';
                     const setterFunction = setters[setterName];
@@ -251,9 +251,22 @@ const ClientComponent = () => {
                         <label
                             className={`${styles.label} ${styles.text_size_13}`}
                         > Withdraw Amount</label>
-                        <span
-                            className={`${styles.text_left} ${styles.invalid_message}`}
-                        ></span>
+                         {
+                            totalAmountError?
+                            (
+                                <span
+                                    className={`${styles.text_left} ${styles.back_invalid}`}
+                                >
+                                    {totalAmountError}
+                                </span>
+                            ):
+                            (
+                                <span
+                                    className={`${styles.text_left} ${styles.invalid_message}`}
+                                >
+                                </span>
+                            )
+                        }
                     </div>
                 </div>
                 <div className={`${styles.formcontrol} ${styles.my_30} ${styles.d_flex} ${styles.flex_space_around} `}>

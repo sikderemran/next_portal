@@ -453,7 +453,7 @@ const ClientComponent = () => {
                         <label
                             className={`${styles.label} ${styles.text_size_13}`}
                         >Select Instrument</label>
-                         {
+                        {
                             instrumentError[index]?
                             (
                                 <span

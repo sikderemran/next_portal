@@ -5,21 +5,25 @@ import styles from "../../assets/style.module.css";
 import Head from 'next/head';
 
 export const metadata = {
-    title: "Withdraw - Brac EPL Investments Limited",
+    title: "Change Password - Brac EPL Investments Limited",
     description: "Brac EPL Investments Limited",
 };
-const Withdraw = () => {
+
+const ChangePassword = () => {
     return (
         <>
             <Head>
                 <title>{metadata.title}</title>
                 <meta name="description" content={metadata.description} />
             </Head>
-            <div className={`${styles.card} ${styles.vh_80} ${styles.mt_35} ${styles.mb_20} ${styles.mx_auto}`}>
-                <h1 className={`${styles.gradient_text_blue}`}> withdraw REQUEST FORM </h1>
-                <ClientComponent />
+            <div className={styles.page_content}>
+                <div className={`${styles.card} ${styles.vh_80} ${styles.mt_35} ${styles.mb_20} ${styles.mx_auto}`}>
+                    <h1 className={`${styles.gradient_text_blue}`}> Chnage Password Form </h1>
+                    <ClientComponent />
+                </div>
             </div>
         </>
+
     );
 }
-export default Withdraw
+export default ChangePassword

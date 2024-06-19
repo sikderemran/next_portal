@@ -3,11 +3,11 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import styles from '../assets/style.module.css';
-
 const ClientComponent = () => {
 
     const [sideBar, setsideBar]         = useState(true);
     const [screenWidth, setScreenWidth] = useState();
+
 
     useEffect(() => {
         if(window.innerWidth<1000){

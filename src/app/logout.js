@@ -6,7 +6,7 @@ import { signOut } from 'next-auth/react';
 export default function Logout() {
   return (
     <FontAwesomeIcon onClick={() => {
-      signOut();
+      signOut(); 
     }} icon={faRightFromBracket} />
   );
 }

@@ -2,21 +2,24 @@ import Header from "../../layout/header";
 import Sidebar from "../../layout/sidebar";
 import ClientComponent from "./ClientComponent";
 import styles from "../../assets/style.module.css";
+import Head from 'next/head';
 
-const Deposit=()=>{
+export const metadata = {
+    title: "IPO - Brac EPL Investments Limited",
+    description: "Brac EPL Investments Limited",
+};
+const Ipo = () => {
     return (
-        <div className={'container '+styles.container}>
-          <Header />
-          <div className={styles.main}>
-            <Sidebar />
-            <div className={styles.page_content}>
-              <div className={`${styles.card} ${styles.vh_80} ${styles.mt_35} ${styles.mb_20} ${styles.mx_auto}`}>
+        <>
+            <Head>
+                <title>{metadata.title}</title>
+                <meta name="description" content={metadata.description} />
+            </Head>
+            <div className={`${styles.card} ${styles.vh_80} ${styles.mt_35} ${styles.mb_20} ${styles.mx_auto}`}>
                 <h1 className={`${styles.gradient_text_blue}`}> IPO Application Form </h1>
                 <ClientComponent />
-              </div>
             </div>
-          </div>
-        </div>
-      );
+        </>
+    );
 }
-export default Deposit
+export default Ipo

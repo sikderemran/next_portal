@@ -140,6 +140,10 @@
   color: #0072bc;
 }
 
+.text_color_red{
+  color: red;
+}
+
 .overflow_hidden{
   overflow-x: hidden;
 }
@@ -267,7 +271,7 @@
   box-shadow: 0 0 2rem 0 rgb(0 0 0 / 5%);
   overflow-x: hidden;
   overflow-y: scroll;
-  transition: width 0.5s ease;
+  transition: width 1s ease;
 }
 
 .sidebar::-webkit-scrollbar {
@@ -369,6 +373,7 @@
   background: #fff;
   display: flex;
   flex-direction: column;
+  animation: slide-down 1s forwards;
 }
 
 .card h1 {
@@ -638,6 +643,17 @@
   100% {
       opacity: 1;
   }
+}
+
+.about_product{
+  margin: 48px;
+  font-size: 14px;
+  line-height: 26px;
+  text-align: left;
+}
+
+.about_product ul li{
+  list-style: decimal-leading-zero;
 }
 
 @media screen and (max-width: 600px) {

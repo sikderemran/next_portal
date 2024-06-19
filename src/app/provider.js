@@ -4,8 +4,8 @@ import React from "react";
 
 function Provider({ children }) {
   return <SessionProvider>
-        {children}
-    </SessionProvider>;
+            {children}
+        </SessionProvider>;
 }
 
 export default Provider;

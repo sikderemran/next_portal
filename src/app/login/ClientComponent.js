@@ -1,7 +1,6 @@
 'use client'
 import React, { useState, FormEvent } from 'react';
 import styles from "../../assets/style.module.css";
-import { useStep } from './context';
 import Loading from '../loading';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
@@ -13,7 +12,6 @@ const ClientComponent = () => {
     const [email, setEmail]                                 = useState(['']);
     const [authError,setAuthError]                          = useState()
     const [password, setPassword]                           = useState(['']);
-    const { step, setStep }                                 = useStep();
     const router                                            = useRouter();
     const [isLoading,setIsLoading]                          = useState(false)
 
@@ -40,7 +38,6 @@ const ClientComponent = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         setIsLoading(true)
-        setStep((step < 4 ? step + 1 : step));
         const formData = new FormData(e.currentTarget);
         const response = await signIn('credentials', {
             email: formData.get('email-0'),
@@ -62,10 +59,7 @@ const ClientComponent = () => {
         }
     };
 
-    const StepBackHandler = (e) => {
-        e.preventDefault()
-        setStep((step > 1 ? step - 1 : step));
-    }
+  
 
     const ValidationHandle = (e) => {
         e.preventDefault()

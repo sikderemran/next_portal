@@ -264,7 +264,7 @@ const ClientComponent = () => {
                 const setters = {
                     deposit_account_id: setAccountError,
                     bank_id: setBankError,
-                    deposit_date: setInstrumentDate,
+                    deposit_date: setInstrumentDateError,
                     deposit_instrument_no: setInstrumentNoError,
                     payment_type: setPaymentTypeError,
                     deposit_slip: setDepositSlip,
@@ -377,7 +377,7 @@ const ClientComponent = () => {
                         }
                     </div>
                     <div className={`${styles.formcontrol} ${styles.mx_10} ${styles.flex_19} ${styles.flex_direction_col}`}>
-                    <select
+                        <select
                             className={styles.input}
                             defaultValue=""
                             required
@@ -533,7 +533,7 @@ const ClientComponent = () => {
                         }
                     </div>
                     <div className={`${styles.formcontrol} ${styles.mx_10} ${styles.flex_19} ${styles.flex_direction_col}`}>
-                    <input
+                        <input
                             className={styles.input}
                             type="file"
                             required
