@@ -11,8 +11,11 @@ const ClientComponent = () => {
     const {data}                                = useSession();
     const prevToken                             = useRef(null)
     
-    const [asOn, setAsOn]                       = useState();
-    const [asOnError, setAsOnError]             = useState();
+    const [fromDate, setFromDate]                       = useState();
+    const [fromDateError, setFromDateError]             = useState();
+
+    const [toDate, setToDate]                       = useState();
+    const [toDateError, setToDateError]             = useState();
     const [docUrl,setDocUrl]                    = useState();
 
     
@@ -49,11 +52,12 @@ const ClientComponent = () => {
         e.preventDefault()
 
         const formData = new FormData();
-        formData.append('as_on_date',asOn)
+        formData.append('from_date',fromDate)
+        formData.append('to_date',toDate)
 
         setIsLoading(true)
 
-        const url = process.env.NEXT_PUBLIC_API_URL + '/report/portfolio-statement-download';
+        const url = process.env.NEXT_PUBLIC_API_URL + '/report/transaction-ledger-download';
         try {
             const response = await fetch(url, {
                 method: 'POST',
@@ -69,7 +73,8 @@ const ClientComponent = () => {
         
             if(response.status!=200){
                 const setters = {
-                    as_on_date: setAsOnError
+                    from_date: setFromDateError,
+                    to_date: setToDateError,
                   };
                 Object.entries(data.errors).forEach(([key, value]) => {
                     const setterName = key;
@@ -123,22 +128,52 @@ const ClientComponent = () => {
                         <input
                             className={styles.input}
                             type="date"
-                            defaultValue={asOn}
+                            defaultValue={fromDate}
                             required
-                            onChange={(e) => handleInputChange(e, setAsOn)}
-                            name={`asOn`}
+                            onChange={(e) => handleInputChange(e, setFromDate)}
+                            name={`fromDate`}
                             onInvalid={e => ValidationHandle(e)}
                         />
                         <label
                             className={`${styles.label} ${styles.text_size_13}`}
-                        >As on</label>
-                        {
-                            asOnError?
+                        >From Date</label>
+                       {
+                            fromDateError?
                             (
                                 <span
                                     className={`${styles.text_left} ${styles.back_invalid}`}
                                 >
-                                    {asOnError}
+                                    {fromDateError}
+                                </span>
+                            ):
+                            (
+                                <span
+                                    className={`${styles.text_left} ${styles.invalid_message}`}
+                                >
+                                </span>
+                            )
+                        }
+                    </div>
+                    <div className={`${styles.formcontrol} ${styles.mx_10} ${styles.flex_21} ${styles.flex_direction_col}`}>
+                        <input
+                            className={styles.input}
+                            type="date"
+                            defaultValue={toDate}
+                            required
+                            onChange={(e) => handleInputChange(e, setToDate)}
+                            name={`toDate`}
+                            onInvalid={e => ValidationHandle(e)}
+                        />
+                        <label
+                            className={`${styles.label} ${styles.text_size_13}`}
+                        >To Date</label>
+                        {
+                            toDateError?
+                            (
+                                <span
+                                    className={`${styles.text_left} ${styles.back_invalid}`}
+                                >
+                                    {toDateError}
                                 </span>
                             ):
                             (

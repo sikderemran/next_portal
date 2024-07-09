@@ -13,20 +13,21 @@ const Header = async () => {
         <>
             <div className={styles.header}>
                 <div className={styles.header_logo}>
-                    <Link href='login'>
-                        <img className={styles.site_logo} src='../next.svg' />
-                        <span className={styles.site_title}>IPORTAL</span>
+                    <Link className={`${styles.d_flex} ${styles.align_item_center}`} href='login'>
+                        <img className={styles.site_logo} src='../investment.png' />
+                        <span className={styles.site_title}>I-SHEBA</span>
                     </Link>
                 </div>
                 <div className={styles.header_search}>
                     {!!session && <ClientComponent />}
                 </div>
                 <div className={styles.header_menu}>
-                    <span className={styles.logout}>
+                    <span className={`${styles.logout} ${styles.d_flex} ${styles.gap_10}`}>
                         {!session && 
                             <>
-                                <Link href='signup'>SignUp</Link>
-                                {/* <Link href='signup'>Forgot Password</Link> */}
+                                <Link href='forgotpassword'>Forgot Password</Link>
+                                |
+                                <Link  href='signup'>SignUp</Link>
                             </>
                         }
                         {!!session && <Logout />}

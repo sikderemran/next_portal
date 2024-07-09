@@ -11,9 +11,13 @@ const ClientComponent = () => {
     const {data}                                = useSession();
     const prevToken                             = useRef(null)
     
-    const [asOn, setAsOn]                       = useState();
-    const [asOnError, setAsOnError]             = useState();
-    const [docUrl,setDocUrl]                    = useState();
+    const [fromDate, setFromDate]                       = useState();
+    const [fromDateError, setFromDateError]             = useState();
+
+    const [fiscalYearId, setFiscalYearId]           = useState();
+    const [fiscalYearError, setFiscalYearError]     = useState();
+    const [docUrl,setDocUrl]                        = useState();
+    const [fiscalYear,setFiscalYear]                = useState([]);
 
     
 
@@ -22,11 +26,53 @@ const ClientComponent = () => {
         if(data && data.user && data.user.name && data.user.name !== prevToken.current){
             token               = data.user.name;
             prevToken.current   = token;
+            setIsLoading(true)
+            fetchFiscalYear(token);
         }
     }, [data?.user?.name]);
 
   
-   
+    const fetchFiscalYear = async (token) => {
+        try {
+            const url = process.env.NEXT_PUBLIC_API_URL + '/report/fiscal-year';
+            const res = await fetch(url, {
+                method: "GET",
+                headers: { 
+                    "Accept": "application/json",
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + String(token)
+                }
+            });
+            const data = await res.json();
+            if(data.status=='success'){
+                setFiscalYear(data.fiscal_year) 
+            }else if(res.status==401){
+                Swal.fire({
+                    position: "top-end",
+                    icon: "warning",
+                    title: data.message,
+                    showConfirmButton: false,
+                    timer: 1000,
+                }).then((result) => {
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                        signOut();
+                    }
+                });
+            }
+        } catch (error) {
+            if(error.name=='TypeError'){
+                Swal.fire({
+                    position: "top-end",
+                    icon: "error",
+                    title: 'The server is not responding. Please wait for a moment.',
+                    showConfirmButton: false,
+                    timer: 2000,
+                  });
+            }
+        }finally {
+            setIsLoading(false)
+        }
+    };
     
     const handleInputChange = (e,setStateFunction) => {
         let element = e.target
@@ -49,11 +95,11 @@ const ClientComponent = () => {
         e.preventDefault()
 
         const formData = new FormData();
-        formData.append('as_on_date',asOn)
+        formData.append('fiscal_year_id',fiscalYearId)
 
         setIsLoading(true)
 
-        const url = process.env.NEXT_PUBLIC_API_URL + '/report/portfolio-statement-download';
+        const url = process.env.NEXT_PUBLIC_API_URL + '/report/tax-certificate-download';
         try {
             const response = await fetch(url, {
                 method: 'POST',
@@ -69,7 +115,7 @@ const ClientComponent = () => {
         
             if(response.status!=200){
                 const setters = {
-                    as_on_date: setAsOnError
+                    fiscal_year: setFiscalYearError,
                   };
                 Object.entries(data.errors).forEach(([key, value]) => {
                     const setterName = key;
@@ -120,25 +166,44 @@ const ClientComponent = () => {
             <form className={`${styles.d_flex} ${styles.flex_direction_col}`} onSubmit={handleSubmit}>
                 <div className={`${styles.d_flex} ${styles.flex_direction_col_md} ${styles.flex_justify_center} ${styles.flex_wrap} ${styles.flex_no_wrap}`}>
                     <div className={`${styles.formcontrol} ${styles.mx_10} ${styles.flex_21} ${styles.flex_direction_col}`}>
-                        <input
+                        <select
                             className={styles.input}
-                            type="date"
-                            defaultValue={asOn}
+                            defaultValue=""
                             required
-                            onChange={(e) => handleInputChange(e, setAsOn)}
-                            name={`asOn`}
+                            onChange={(e) => handleInputChange(e, setFiscalYearId)}
+                            name={`fiscalYearId`}
                             onInvalid={e => ValidationHandle(e)}
-                        />
+                        >
+                            <option disabled></option>
+                        {
+                            
+                            fiscalYear && Object.keys(fiscalYear).length > 0?
+                            (
+                                fiscalYear.map((data,key)=>{
+                                    return <option 
+                                                value={data.fiscal_year_id} 
+                                                key={data.fiscal_year_id}
+                                            >
+                                                {data.fiscal_year}
+                                            </option>
+                                })
+                            ):
+                            (
+                                <option disabled>Data not available</option>
+                            )
+                            
+                        }
+                        </select>
                         <label
                             className={`${styles.label} ${styles.text_size_13}`}
-                        >As on</label>
+                        >Fiscal Year</label>
                         {
-                            asOnError?
+                            fiscalYearError?
                             (
                                 <span
                                     className={`${styles.text_left} ${styles.back_invalid}`}
                                 >
-                                    {asOnError}
+                                    {fiscalYearError}
                                 </span>
                             ):
                             (
@@ -148,6 +213,8 @@ const ClientComponent = () => {
                                 </span>
                             )
                         }
+                        
+                        
                     </div>
                 </div>
                 <div className={`${styles.formcontrol} ${styles.my_30} ${styles.d_flex} ${styles.flex_space_around} `}>

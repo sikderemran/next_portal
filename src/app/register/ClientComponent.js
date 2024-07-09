@@ -5,7 +5,7 @@ import { useStep } from './context';
 import Loading from '../loading';
 import Swal from 'sweetalert2'
 import { useRouter } from 'next/navigation';
-
+import Link from 'next/link';
 const ClientComponent = () => {
 
     const [isLoading,setIsLoading]      = useState(false)
@@ -25,6 +25,8 @@ const ClientComponent = () => {
     const [verifyOtp, setVerifyOtp] = useState();
     const [applicantEmail, setApplicantEmail] = useState();
     const [applicantPhone, setApplicantPhone] = useState();
+    const [termsCondition, setTermsCondition] = useState();
+    
 
     const [applicantName, setApplicantName] = useState();
     const [applicantDOB, setApplicantDOB] = useState();
@@ -52,6 +54,7 @@ const ClientComponent = () => {
     const [applicantSpouseNameError, setApplicantSpouseNameError] = useState();
     const [applicantEmailError, setApplicantEmailError] = useState();
     const [applicantPhoneError, setApplicantPhoneError] = useState();
+    const [termsConditionError, setTermsConditionError] = useState();
     const [applicantIdError, setApplicantIdError] = useState();
     const [applicantEtinError, setApplicantEtinError] = useState();
     const [applicantBoError, setApplicantBoError] = useState();
@@ -226,7 +229,7 @@ const ClientComponent = () => {
             });
 
             const data = await response.json();
-            
+
             if(data.status=='success'){
                 setStep((step < 6 ? step + 1 : step));
                 if(step==3){
@@ -250,7 +253,7 @@ const ClientComponent = () => {
                         icon: "success",
                         title: data.message,
                         showConfirmButton: false,
-                        timer: 2000,
+                        timer: 1500,
                     }).then((result) => {
                         if (result.dismiss === Swal.DismissReason.timer) {
                             router.push('/login');
@@ -656,6 +659,16 @@ const ClientComponent = () => {
                 {
                 step==1&&
                 <div className={`${styles.d_flex} ${styles.flex_100} ${styles.flex_direction_col_md} ${styles.flex_justify_center} ${styles.flex_wrap} ${styles.flex_no_wrap}`}>
+                    <div className={`${styles.formcontrol} ${styles.flex_100}`}>
+                        <b>Please keep the soft copy / picture of the following documents ready:</b>
+                        <ul className={`${styles.list_disc} ${styles.ms_15}`}>
+                            <li>Applicant's and nominee's natonal ID card.</li>
+                            <li>Color photo and signature of the  applicant(s) and nominess(s).</li>
+                            <li>Bank cheque leaf of the applicant.</li>
+                            <li>Applicant's E-TIN certificate (To enjoy tax benifit).</li>
+                            <li>Passport copy for Non-resident Bangladeshi (NRB).</li>
+                        </ul>
+                    </div>
                     <div className={`${styles.formcontrol} ${styles.flex_21}`}>
                         <input
                             className={styles.input}
@@ -706,6 +719,39 @@ const ClientComponent = () => {
                                     className={`${styles.text_left} ${styles.back_invalid}`}
                                 >
                                     {applicantPhoneError}
+                                </span>
+                            ):
+                            (
+                                <span
+                                    className={`${styles.text_left} ${styles.invalid_message}`}
+                                >
+                                </span>
+                            )
+                        }
+                    </div>
+                    <div className={`${styles.formcontrol} ${styles.flex_100} ${styles.text_center}`}>
+                        <input
+                            className={styles.input}
+                            type="checkbox"
+                            defaultValue={termsCondition}
+                            required
+                            onChange={(e) => handleInputChange(e, setTermsCondition)}
+                            name="termsCondition"
+                            onInvalid={e => ValidationHandle(e)}
+                        />
+                        <label
+                            className={`${styles.w_100}`}
+                        > 
+                            I accept the <Link href="/termscondition">Terms & Conditions</Link>
+                        </label>
+                        
+                        {
+                            termsConditionError?
+                            (
+                                <span
+                                    className={`${styles.text_left} ${styles.back_invalid} `}
+                                >
+                                    {termsConditionError}
                                 </span>
                             ):
                             (
@@ -1356,6 +1402,12 @@ const ClientComponent = () => {
                                 </span>
                             )
                         }
+                    </div>
+                    <div className={`${styles.formcontrol} ${styles.flex_100}`}>
+                        <p className={`${styles.text_color_red} ${styles.text_size_13}`}>
+                            Note:Benefit from a 5% cash dividend exemption by adding your Taxpayer 
+                            Identification Number (TIN) to your BO Account.
+                        </p>
                     </div>
                 </div>
                 }
@@ -2039,7 +2091,6 @@ const ClientComponent = () => {
                         <input
                             className={styles.input}
                             type="file"
-                            defaultValue={applicantPhoto}
                             required
                             onChange={(e) => handleInputChange(e, setApplicantPhoto)}
                             name="applicantPhoto"
@@ -2069,7 +2120,6 @@ const ClientComponent = () => {
                         <input
                             className={styles.input}
                             type="file"
-                            defaultValue={applicantSignature}
                             required
                             onChange={(e) => handleInputChange(e, setApplicantSignature)}
                             name="applicantSignature"
@@ -2099,7 +2149,6 @@ const ClientComponent = () => {
                         <input
                             className={styles.input}
                             type="file"
-                            defaultValue={applicantNidPhoto}
                             required
                             onChange={(e) => handleInputChange(e, setApplicantNidPhoto)}
                             name="applicantNidPhoto"
@@ -2129,7 +2178,6 @@ const ClientComponent = () => {
                         <input
                             className={styles.input}
                             type="file"
-                            defaultValue={applicantBankLeaf}
                             required
                             onChange={(e) => handleInputChange(e, setApplicantBankLeaf)}
                             name="applicantBankLeaf"
@@ -2159,7 +2207,6 @@ const ClientComponent = () => {
                         <input
                             className={styles.input}
                             type="file"
-                            defaultValue={nomineePhoto}
                             required
                             onChange={(e) => handleInputChange(e, setNomineePhoto)}
                             name="nomineePhoto"
@@ -2189,7 +2236,6 @@ const ClientComponent = () => {
                         <input
                             className={styles.input}
                             type="file"
-                            defaultValue={nomineeSignature}
                             required
                             onChange={(e) => handleInputChange(e, setNomineeSignature)}
                             name="nomineeSignature"
@@ -2219,7 +2265,6 @@ const ClientComponent = () => {
                         <input
                             className={styles.input}
                             type="file"
-                            defaultValue={nomineeNidPhoto}
                             required
                             onChange={(e) => handleInputChange(e, setNomineeNidPhoto)}
                             name="nomineeNidPhoto"

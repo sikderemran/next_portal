@@ -204,7 +204,7 @@ const ClientComponent = () => {
         formData.append('ipo_details_id',ipo)
         formData.append('quantity',quantity)
 
-        if(parseFloat(totalAmount.replace(/,/g,""))>parseFloat(purchasePower)){
+        if(parseFloat(totalAmount.replace(/,/g,""))>parseFloat(purchasePower.replace(/,/g,""))){
             Swal.fire({
                 position: "top-end",
                 icon: "warning",

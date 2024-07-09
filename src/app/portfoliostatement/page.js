@@ -3,12 +3,18 @@ import Sidebar from "../../layout/sidebar";
 import ClientComponent from "./ClientComponent";
 import styles from "../../assets/style.module.css";
 
-const PortfolioStatement = () => {
+export const metadata = {
+    title: "Portfolio Statement - Brac EPL Investments Limited",
+    description: "Brac EPL Investments Limited",
+};
+const Report = () => {
     return (
-        <div className={`${styles.card} ${styles.vh_80} ${styles.mt_35} ${styles.mb_20} ${styles.mx_auto}`}>
-            <h1 className={`${styles.gradient_text_blue}`}> Portfolio Statement Report </h1>
-            <ClientComponent />
-        </div>
+        <>
+            <div className={`${styles.card} ${styles.card_slide_down} ${styles.vh_80} ${styles.mt_35} ${styles.mb_20} ${styles.mx_auto}`}>
+                <h1 className={`${styles.gradient_text_blue}`}> Portfolio Statement</h1>
+                <ClientComponent />
+            </div>
+        </>
     );
 }
-export default PortfolioStatement
+export default Report

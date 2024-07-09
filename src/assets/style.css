@@ -64,9 +64,14 @@ table tr th {
   animation: spinner .6s linear infinite;
 }
 
-input[type=date]:required:invalid::-webkit-datetime-edit {
-  color: transparent;
+input[type=date]:required:invalid ~ label {
+  top: -18px;
 }
+
+input[type=date]:required:invalid::-webkit-datetime-edit{
+  /* color: transparent; */
+}
+
 input[type=date]:focus::-webkit-datetime-edit {
   color: black !important;
 }

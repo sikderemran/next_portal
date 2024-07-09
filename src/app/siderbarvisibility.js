@@ -11,7 +11,7 @@ const SideBarVisibility = ({ children }) => {
     const [showChildren, setShowChildren] = useState(false);
 
     useEffect(() => {
-        if (pathname == '/login' || pathname == '/aboutproduct' || pathname == '/register' || pathname == '/signup') {
+        if (pathname == '/login' || pathname == '/aboutproduct' || pathname == '/termscondition' || pathname == '/register' || pathname == '/signup' || pathname == '/forgotpassword') {
             setShowSidebar(false);
             setShowChildren(true)
         } else {
@@ -25,7 +25,9 @@ const SideBarVisibility = ({ children }) => {
             {showSidebar && <Sidebar/>}
             {showChildren &&
                 <div className={styles.page_content}>
+                    
                     {children}
+                    <marquee className={`${styles.text_color}`}>Welcome to I-Sheba.</marquee>
                 </div>
             }
         </>

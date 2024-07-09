@@ -13,7 +13,7 @@ export const config =
              * match at the end $
              * or |
              ****/
-            '/((?!.*\.svg$|.*\.jpg$|.*\.png$|login|register|signup|aboutproduct|_next).*)/'
+            '/((?!.*\.svg$|.*\.jpg$|.*\.png$|login|register|signup|forgotpassword|aboutproduct|termscondition|terms.pdf|_next).*)/'
         ] 
 }
 
