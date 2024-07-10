@@ -4,8 +4,8 @@ import ClientComponent from "./ClientComponent";
 import styles from "../../assets/style.module.css";
 
 export const metadata = {
-    title: "Deposit Statement- Brac EPL Investments Limited",
-    description: "Brac EPL Investments Limited",
+    title: "Deposit Statement- "+process.env.APP_NAME,
+    description: process.env.APP_NAME,
 };
 const Report = () => {
     return (

@@ -6,6 +6,7 @@ import Loading from '../loading';
 import Swal from 'sweetalert2'
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+
 const ClientComponent = () => {
 
     const [isLoading,setIsLoading]      = useState(false)
@@ -20,6 +21,7 @@ const ClientComponent = () => {
     const [relationshipList, setRelationshipList]   = useState([]);
     const [accountList, setAccountList]             = useState([]);
     const [bankList, setBankList]                   = useState([]);
+    const [branchList, setBranchList]               = useState([]);
     const [paymentTypeList, setPaymentTypeList]     = useState([]);
 
     const [verifyOtp, setVerifyOtp] = useState();
@@ -84,6 +86,8 @@ const ClientComponent = () => {
 
     const [account, setAccount]                 = useState();
     const [bank, setBank]                       = useState();
+    const [branch, setBranch]                   = useState();
+    const [accountNo,setAccountNo]              = useState()
     const [instrumentDate, setInstrumentDate]   = useState();
     const [instrumentNo, setInstrumentNo]       = useState();
     const [paymentType, setPaymentType]         = useState();
@@ -93,6 +97,8 @@ const ClientComponent = () => {
     
     const [accountError, setAccountError]                   = useState();
     const [bankError, setBankError]                         = useState();
+    const [branchError, setBranchError]                     = useState();
+    const [accountNoError,setAccountNoError]                = useState()
     const [instrumentDateError, setInstrumentDateError]     = useState();
     const [instrumentNoError, setInstrumentNoError]         = useState();
     const [paymentTypeError, setPaymentTypeError]           = useState();
@@ -146,6 +152,10 @@ const ClientComponent = () => {
         let children = element.parentElement.children;
         children[children.length - 1].textContent = element.validationMessage
         
+        if(element.name=='bank'){
+            fetchBranchList(element.value)
+        }
+
         if(element.type=='file'){
             setStateFunction(element.files[0])
         }else{
@@ -182,6 +192,11 @@ const ClientComponent = () => {
             formData.append('bo_account_number',applicantBo)
             formData.append('present_address',applicantPermanentAddress)
             formData.append('permanent_address',applicantPermanentAddress)
+
+            formData.append('bank_id',bank)
+            formData.append('branch_id',branch)
+            formData.append('bank_account_no',accountNo)
+            
         }else if(step==4){
             formData.append('investor_details_id',investorDetailsId)
             formData.append('nominee_full_name',nomineeName)
@@ -235,6 +250,7 @@ const ClientComponent = () => {
                 if(step==3){
                     setInvestorDetailsId(data.investor_details_id)
                 }else if(step==2){
+                    fetchBankList()
                     fetchProductList()
                     fetchOcupationList()
                     fetchGenderList()
@@ -296,7 +312,10 @@ const ClientComponent = () => {
                         occupation_id: setApplicantOccupationError,
                         nationality: setApplicantNationalityError,
                         present_address: setApplicantPresentAddressError,
-                        permanent_address: setApplicantPermanentAddressError
+                        permanent_address: setApplicantPermanentAddressError,
+                        bank_id: setBankError,
+                        branch_id: setBranchError,
+                        bank_account_no: setAccountNoError,
                     };
                 }else if(step==4){
                     var setters = {
@@ -602,6 +621,46 @@ const ClientComponent = () => {
         }
     };
 
+    const fetchBranchList = async (bank_id,token) => {
+        try {
+            const url = process.env.NEXT_PUBLIC_API_URL + '/branch-list?bank_id='+bank_id;
+            const res = await fetch(url, {
+                method: "GET",
+                headers: { 
+                    "Accept": "application/json",
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + String(token)
+                }
+            });
+            const data = await res.json();
+            if(data.status=='success'){
+                setBranchList(data.branch_list)
+            }else if(res.status==401){
+                Swal.fire({
+                    position: "top-end",
+                    icon: "warning",
+                    title: data.message,
+                    showConfirmButton: false,
+                    timer: 1000,
+                }).then((result) => {
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                        signOut();
+                    }
+                });
+            }
+        } catch (error) {
+            if(error.name=='TypeError'){
+                Swal.fire({
+                    position: "top-end",
+                    icon: "error",
+                    title: 'The server is not responding. Please wait for a moment.',
+                    showConfirmButton: false,
+                    timer: 2000,
+                  });
+            }
+        }
+    };
+
     const fetchPaymentType = async () => {
         try {
             const url = process.env.NEXT_PUBLIC_API_URL + '/payment-type-list';
@@ -659,16 +718,7 @@ const ClientComponent = () => {
                 {
                 step==1&&
                 <div className={`${styles.d_flex} ${styles.flex_100} ${styles.flex_direction_col_md} ${styles.flex_justify_center} ${styles.flex_wrap} ${styles.flex_no_wrap}`}>
-                    <div className={`${styles.formcontrol} ${styles.flex_100}`}>
-                        <b>Please keep the soft copy / picture of the following documents ready:</b>
-                        <ul className={`${styles.list_disc} ${styles.ms_15}`}>
-                            <li>Applicant's and nominee's natonal ID card.</li>
-                            <li>Color photo and signature of the  applicant(s) and nominess(s).</li>
-                            <li>Bank cheque leaf of the applicant.</li>
-                            <li>Applicant's E-TIN certificate (To enjoy tax benifit).</li>
-                            <li>Passport copy for Non-resident Bangladeshi (NRB).</li>
-                        </ul>
-                    </div>
+                    
                     <div className={`${styles.formcontrol} ${styles.flex_21}`}>
                         <input
                             className={styles.input}
@@ -762,6 +812,18 @@ const ClientComponent = () => {
                             )
                         }
                     </div>
+
+                    <div className={`${styles.formcontrol} ${styles.flex_100}`}>
+                        <b>Please keep the soft copy / picture of the following documents ready:</b>
+                        <ul className={`${styles.list_disc} ${styles.ms_15}`}>
+                            <li>Applicant's and nominee's national ID card.</li>
+                            <li>Color photo and signature of the  applicant(s) and nominess(s).</li>
+                            <li>Bank cheque leaf of the applicant.</li>
+                            <li>Applicant's E-TIN certificate (To enjoy tax benifit).</li>
+                            <li>Passport copy for Non-resident Bangladeshi (NRB).</li>
+                        </ul>
+                    </div>
+                    
                 </div>
                 }
 
@@ -1070,10 +1132,9 @@ const ClientComponent = () => {
                     </div>
                     <div className={`${styles.formcontrol} ${styles.flex_21}`}>
                         <input
-                            className={styles.input}
+                            className={`${styles.input} ${styles.optional}`}
                             type="text"
                             defaultValue={applicantBo}
-                            required
                             onChange={(e) => handleInputChange(e, setApplicantBo)}
                             name="applicantBo"
                             onInvalid={e => ValidationHandle(e)}
@@ -1098,6 +1159,138 @@ const ClientComponent = () => {
                             )
                         }
                     </div>
+
+
+                    <div className={`${styles.formcontrol} ${styles.flex_21}`}>
+                        <select
+                            className={styles.input}
+                            defaultValue=""
+                            required
+                            onChange={(e) => handleInputChange(e, setBank)}
+                            name={`bank`}
+                            onInvalid={e => ValidationHandle(e)}
+                        >
+                            <option disabled></option>
+                        {
+                                bankList && Object.keys(bankList).length > 0?
+                                (
+                                    bankList.map((data,key)=>{
+                                        return <option 
+                                                    value={data.org_id} 
+                                                    key={data.org_id}
+                                                >
+                                                    {data.org_name}
+                                                </option>
+                                    })
+                                ):
+                                (
+                                    <option disabled>Data not available</option>
+                                )
+                            
+                        }
+                        </select>
+                        <label
+                            className={`${styles.label}`}
+                        >Bank Name</label>
+                        {
+                            bankError?
+                            (
+                                <span
+                                    className={`${styles.text_left} ${styles.back_invalid}`}
+                                >
+                                    {bankError}
+                                </span>
+                            ):
+                            (
+                                <span
+                                    className={`${styles.text_left} ${styles.invalid_message}`}
+                                >
+                                </span>
+                            )
+                        }
+                    </div>
+
+
+                    <div className={`${styles.formcontrol} ${styles.flex_21}`}>
+                        <select
+                            className={styles.input}
+                            defaultValue=""
+                            required
+                            onChange={(e) => handleInputChange(e, setBranch)}
+                            name={`branch`}
+                            onInvalid={e => ValidationHandle(e)}
+                        >
+                            <option disabled></option>
+                        {
+                                branchList && Object.keys(branchList).length > 0?
+                                (
+                                    branchList.map((data,key)=>{
+                                        return <option 
+                                                    value={data.branch_id} 
+                                                    key={data.branch_id}
+                                                >
+                                                    {data.branch_name}
+                                                </option>
+                                    })
+                                ):
+                                (
+                                    <option disabled>Data not available</option>
+                                )
+                            
+                        }
+                        </select>
+                        <label
+                            className={`${styles.label}`}
+                        >Branch Name</label>
+                        {
+                            branchError?
+                            (
+                                <span
+                                    className={`${styles.text_left} ${styles.back_invalid}`}
+                                >
+                                    {branchError}
+                                </span>
+                            ):
+                            (
+                                <span
+                                    className={`${styles.text_left} ${styles.invalid_message}`}
+                                >
+                                </span>
+                            )
+                        }
+                    </div>
+
+                    <div className={`${styles.formcontrol} ${styles.flex_21}`}>
+                        <input
+                            className={styles.input}
+                            type="text"
+                            defaultValue={accountNo}
+                            required
+                            onChange={(e) => handleInputChange(e, setAccountNo)}
+                            name={`accountNo`}
+                            onInvalid={e => ValidationHandle(e)}
+                        />
+                        <label
+                            className={`${styles.label}`}
+                        > Account No. </label>
+                        {
+                            accountNoError?
+                            (
+                                <span
+                                    className={`${styles.text_left} ${styles.back_invalid}`}
+                                >
+                                    {accountNoError}
+                                </span>
+                            ):
+                            (
+                                <span
+                                    className={`${styles.text_left} ${styles.invalid_message}`}
+                                >
+                                </span>
+                            )
+                        }
+                    </div>
+                    
                     <div className={`${styles.formcontrol} ${styles.flex_21}`}>
                         <select
                             className={styles.input}

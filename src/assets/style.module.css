@@ -199,10 +199,8 @@
 
 .site_logo {
     height: auto;
-    width: 150px;
+    width: 210px;
     min-height: auto;
-    min-width: 95px;
-    margin: 0 10px 0 5px;
 }
 
 .site_logo path {
@@ -444,6 +442,7 @@
 
 .input:focus~.label,
 .input:not(.optional):valid~.label,
+.input.invalid.optional:valid~.label,
 .input:-webkit-autofill~.label {
     top: -18px !important;
     left: 0 !important;

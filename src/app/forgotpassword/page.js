@@ -5,8 +5,8 @@ import ProgressBar from "./progress_bar"
 import { ContextProvider } from './context';
 
 export const metadata = {
-    title: "Forgot Password - Brac EPL Investments Limited",
-    description: "Brac EPL Investments Limited",
+    title: "Forgot Password - "+process.env.APP_NAME,
+    description: process.env.APP_NAME,
 };
 const ForgotPassword = () => {
 

@@ -2,8 +2,8 @@ import Header from '../../layout/header'
 import styles from "../../assets/style.module.css";
 
 export const metadata = {
-    title: "About Product - Brac EPL Investments Limited",
-    description: "Brac EPL Investments Limited",
+    title: "About Product - "+process.env.APP_NAME,
+    description: process.env.APP_NAME,
 };
 const AboutProduct = () => {
 
@@ -14,22 +14,22 @@ const AboutProduct = () => {
                 <div className={`${styles.d_flex} ${styles.my_20} ${styles.flex_direction_col_md} ${styles.about_product}`}>
                     <ul>
                         <li>
-                            CAP EDGE- INVESTOR DISCRETIONARY ACCOUNT- Including facilities for margin loans to assist investors, fees associated with the loan, and loan ratio (in accordance with BSEC guidelines)
+                            <b>CAP EDGE- INVESTOR DISCRETIONARY ACCOUNT</b> - Including facilities for margin loans to assist investors, fees associated with the loan, and loan ratio (in accordance with BSEC guidelines)
                         </li>
                         <li>
-                            CAP CASH- Beneficiary Accounts (BO)- Equity Product, attractive brokerage commission & Annual BO maintenance Fee without hidden costs or charges.
+                            <b>CAP CASH- Beneficiary Accounts (BO)</b> - Equity Product, attractive brokerage commission & Annual BO maintenance Fee without hidden costs or charges.
                         </li>
                         <li>
-                            MANAGED CAP EDGE- Portfolio Managers oversee portfolio by making investments on client's behalf
+                            <b>MANAGED CAP EDGE</b> - Portfolio Managers oversee portfolio by making investments on client's behalf
                         </li>
                         <li>
-                            Wealth max- (CAPEDGE)- Equity Product, attractive brokerage commission & Annual BO maintenance Fee without hidden costs or charges specifically for BRAC Bank Premium Guests.
+                            <b>Wealth max- (CAPEDGE)</b> - Equity Product, attractive brokerage commission & Annual BO maintenance Fee without hidden costs or charges specifically for BRAC Bank Premium Guests.
                         </li>
                         <li>
-                            WEALTH MAX- (MANAGED CAPEDGE)- Portfolio Managers oversee client portfolios by making investments specifically for BRAC Bank Premium Guests.
+                            <b>WEALTH MAX- (MANAGED CAPEDGE)</b> - Portfolio Managers oversee client portfolios by making investments specifically for BRAC Bank Premium Guests.
                         </li>
                         <li>
-                            BONDHON- Equity Product, Specifically Designed for Investors Seeking to Invest at T-Bill.
+                            <b>BONDHON</b> - Equity Product, Specifically Designed for Investors Seeking to Invest at T-Bill.
                         </li>
                     </ul>
                 </div>

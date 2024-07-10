@@ -2,8 +2,8 @@ import Header from '../../layout/header'
 import styles from "../../assets/style.module.css";
 
 export const metadata = {
-    title: "CDBL BO Account: Terms & Conditions - Brac EPL Investments Limited",
-    description: "Brac EPL Investments Limited",
+    title: "CDBL BO Account: Terms & Conditions - "+process.env.APP_NAME,
+    description: process.env.APP_NAME,
 };
 const TermsCondition = () => {
 

@@ -381,21 +381,21 @@ const ClientComponent = () => {
                             className={styles.input}
                             defaultValue=""
                             required
-                            onChange={(e) => handleInputChange(e, setBank)}
-                            name={`bank`}
+                            onChange={(e) => handleInputChange(e, setPaymentType)}
+                            name={`paymentType`}
                             onInvalid={e => ValidationHandle(e)}
                         >
                             <option disabled></option>
                         {
-                                bankList && Object.keys(bankList).length > 0?
+                                paymentTypeList?
                                 (
-                                    bankList.map((data,key)=>{
+                                    Object.entries(paymentTypeList).map(([key, value]) => {
                                         return <option 
-                                                    value={data.org_id} 
-                                                    key={data.org_id}
-                                                >
-                                                    {data.org_name}
-                                                </option>
+                                            value={key} 
+                                            key={key}
+                                        >
+                                            {value}
+                                        </option>
                                     })
                                 ):
                                 (
@@ -406,14 +406,14 @@ const ClientComponent = () => {
                         </select>
                         <label
                             className={`${styles.label} ${styles.text_size_13}`}
-                        >Bank Name</label>
-                        {
-                            bankError?
+                        >Payment Type</label>
+                         {
+                            paymentTypeError?
                             (
                                 <span
                                     className={`${styles.text_left} ${styles.back_invalid}`}
                                 >
-                                    {bankError}
+                                    {paymentTypeError}
                                 </span>
                             ):
                             (
@@ -424,6 +424,58 @@ const ClientComponent = () => {
                             )
                         }
                     </div>
+                    {
+                        (paymentType!='bkash' && paymentType!='cd')&&
+                        <div className={`${styles.formcontrol} ${styles.mx_10} ${styles.flex_19} ${styles.flex_direction_col}`}>
+                            <select
+                                className={styles.input}
+                                defaultValue=""
+                                required
+                                onChange={(e) => handleInputChange(e, setBank)}
+                                name={`bank`}
+                                onInvalid={e => ValidationHandle(e)}
+                            >
+                                <option disabled></option>
+                            {
+                                    bankList && Object.keys(bankList).length > 0?
+                                    (
+                                        bankList.map((data,key)=>{
+                                            return <option 
+                                                        value={data.org_id} 
+                                                        key={data.org_id}
+                                                    >
+                                                        {data.org_name}
+                                                    </option>
+                                        })
+                                    ):
+                                    (
+                                        <option disabled>Data not available</option>
+                                    )
+                                
+                            }
+                            </select>
+                            <label
+                                className={`${styles.label} ${styles.text_size_13}`}
+                            >Bank Name</label>
+                            {
+                                bankError?
+                                (
+                                    <span
+                                        className={`${styles.text_left} ${styles.back_invalid}`}
+                                    >
+                                        {bankError}
+                                    </span>
+                                ):
+                                (
+                                    <span
+                                        className={`${styles.text_left} ${styles.invalid_message}`}
+                                    >
+                                    </span>
+                                )
+                            }
+                        </div>
+                    }
+                    
                     <div className={`${styles.formcontrol} ${styles.mx_10} ${styles.flex_19} ${styles.flex_direction_col}`}>
                         <input
                             className={styles.input}
@@ -474,54 +526,6 @@ const ClientComponent = () => {
                                     className={`${styles.text_left} ${styles.back_invalid}`}
                                 >
                                     {instrumentNoError}
-                                </span>
-                            ):
-                            (
-                                <span
-                                    className={`${styles.text_left} ${styles.invalid_message}`}
-                                >
-                                </span>
-                            )
-                        }
-                    </div>
-                    <div className={`${styles.formcontrol} ${styles.mx_10} ${styles.flex_19} ${styles.flex_direction_col}`}>
-                        <select
-                            className={styles.input}
-                            defaultValue=""
-                            required
-                            onChange={(e) => handleInputChange(e, setPaymentType)}
-                            name={`paymentType`}
-                            onInvalid={e => ValidationHandle(e)}
-                        >
-                            <option disabled></option>
-                        {
-                                paymentTypeList?
-                                (
-                                    Object.entries(paymentTypeList).map(([key, value]) => {
-                                        return <option 
-                                            value={key} 
-                                            key={key}
-                                        >
-                                            {value}
-                                        </option>
-                                    })
-                                ):
-                                (
-                                    <option disabled>Data not available</option>
-                                )
-                            
-                        }
-                        </select>
-                        <label
-                            className={`${styles.label} ${styles.text_size_13}`}
-                        >Payment Type</label>
-                         {
-                            paymentTypeError?
-                            (
-                                <span
-                                    className={`${styles.text_left} ${styles.back_invalid}`}
-                                >
-                                    {paymentTypeError}
                                 </span>
                             ):
                             (

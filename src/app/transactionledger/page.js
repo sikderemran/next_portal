@@ -4,8 +4,8 @@ import ClientComponent from "./ClientComponent";
 import styles from "../../assets/style.module.css";
 
 export const metadata = {
-    title: "Transaction Ledger- Brac EPL Investments Limited",
-    description: "Brac EPL Investments Limited",
+    title: "Transaction Ledger- "+process.env.APP_NAME,
+    description: process.env.APP_NAME,
 };
 const Report = () => {
     return (

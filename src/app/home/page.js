@@ -6,8 +6,8 @@ import { getServerSession } from 'next-auth';
 import Clock from '../clock'
 
 export const metadata = {
-    title: "Home - Brac EPL Investments Limited",
-    description: "Brac EPL Investments Limited",
+    title: "Home - "+process.env.APP_NAME,
+    description: process.env.APP_NAME,
 };
 
 export default async function asyncHome() {

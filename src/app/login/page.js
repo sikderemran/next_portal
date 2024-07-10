@@ -6,8 +6,8 @@ import { redirect } from 'next/navigation';
 import Link from "next/link";
 
 export const metadata = {
-    title: "Login - Brac EPL Investments Limited",
-    description: "Brac EPL Investments Limited",
+    title: "Login - "+process.env.APP_NAME,
+    description: process.env.APP_NAME,
 };
 const Login = async () => {
     const session = await getServerSession();

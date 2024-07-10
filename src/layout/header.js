@@ -12,10 +12,10 @@ const Header = async () => {
     return (
         <>
             <div className={styles.header}>
-                <div className={styles.header_logo}>
+                <div className={`${styles.header_logo} ${styles.flex_justify_center}`}>
                     <Link className={`${styles.d_flex} ${styles.align_item_center}`} href='login'>
-                        <img className={styles.site_logo} src='../investment.png' />
-                        <span className={styles.site_title}>I-SHEBA</span>
+                        <img className={styles.site_logo} src={process.env.LOGO} />
+                        {/* <span className={styles.site_title}>I-SHEBA</span> */}
                     </Link>
                 </div>
                 <div className={styles.header_search}>
